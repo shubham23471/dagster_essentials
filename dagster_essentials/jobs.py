@@ -11,10 +11,16 @@ weekly_update_job = dg.define_asset_job(
     
 )
 
+
+adhoc_request = dg.AssetSelection.assets(["adhoc_request"])
+adhoc_request_job = dg.define_asset_job(
+    name="adhoc_request_job",
+    selection=adhoc_request,
+)
+
 # selecting all the asset except trips_by_week
 trip_update_job = dg.define_asset_job(
     name="trip_update_job",
     partitions_def=monthly_partition,
-    selection=dg.AssetSelection.all() - trips_by_week
+    selection=dg.AssetSelection.all() - trips_by_week - adhoc_request
 )
-
